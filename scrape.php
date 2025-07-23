@@ -3,7 +3,7 @@
 function process_har_to_csv($filename)
 {
     $raw_json = file_get_contents($filename);
-    $output = fopen("./csv/" . substr($filename, 0, -4) . ".csv", "w") or die("Unable to open file!");
+    $output = fopen("csv/" . substr(basename($filename), 0, -4) . ".csv", "w") or die("Unable to open file!");
     fwrite($output, "Close Date,Change%\n");
     $json = json_decode($raw_json, true)["log"]["entries"];
     $found = false;
@@ -13,7 +13,8 @@ function process_har_to_csv($filename)
             $json = $json[$i]["response"]["content"];
         }
     if (!$found) {
-        print ("No data found in $filename. Skipping.\n");
+        $basename = basename($filename);
+        print ("No data found in $basename. Skipping.\n");
         return 0;
     }
     $inner_json = json_decode($json["text"], true);
@@ -39,14 +40,14 @@ function process_har_to_csv($filename)
         $line = $date->format('m/d/Y') . "," . $value . "\n";
         fwrite($output, $line);
     }
-    print ("Processed " . $filename . " successfully.\n");
+    print ("Processed " . basename($filename) . " successfully.\n");
     fclose($output);
     return 1;
 }
 
 function process_all_hars()
 {
-    $files = glob("*.har");
+    $files = glob("hars/*.har");
     $n_files = count($files);
     $n_success = 0;
     if (!$files)
