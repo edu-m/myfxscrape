@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "commander": "^14.0.1",
+    "csv-parse": "^6.1.0",
+    "fs-extra": "^11.3.2",
+    "p-queue": "^8.1.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-har": "^1.1.2"
+  }
+}
